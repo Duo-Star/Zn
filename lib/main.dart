@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'zn.dart' as zn;
 
 void main() {
   runApp(const MyApp());
+  zn.main();
 }
 
 class MyApp extends StatelessWidget {

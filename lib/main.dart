@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'zn.dart' as zn;
-
+import 'Zn/Bush/div_bush.dart' as div_bush;
+import 'Zn/Bush/unfold.dart' as unfold;
 void main() {
   runApp(const MyApp());
-  zn.main();
+  // div_bush.test();
+  unfold.checkIfFunction('a={{}}');
 }
 
 class MyApp extends StatelessWidget {

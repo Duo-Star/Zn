@@ -21,7 +21,6 @@ Factorial = (x){ << r {r = 1}??(x <= 1) r = x * f(x-1) }
 1 1?1 {1}() {<<1}() (x){x}(1) {1}??(1)() {<<r r=1}() (i){i}loop(1) (x){<<r r=x}(1)
 
 
-
 ''';
   List<Map> map = unfold.forest(code);
 

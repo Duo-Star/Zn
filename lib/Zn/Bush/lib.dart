@@ -1,6 +1,6 @@
 library;
 
-//
+// 是否在字符表中
 bool isIn(String str, List<String> li) {
   for (String s in li) {
     if (str == s) {
@@ -10,7 +10,7 @@ bool isIn(String str, List<String> li) {
   return false;
 }
 
-//
+// 寻找第一个非空字符
 String findFirstNotBlankSign(String str) {
   if (str.isEmpty) return '/?';
   for (int i = 0; i < str.length; i++) {
@@ -27,7 +27,7 @@ bool isAlpha(String char) {
   return RegExp(r'^[a-zA-Z]$').hasMatch(char);
 }
 
-//
+// 移除注释// or /* */，其中""中不处理，\"为转义
 String removeComments(String sourceCode) {
   StringBuffer result = StringBuffer();
   int i = 0;
@@ -187,3 +187,45 @@ List<dynamic> findPair(String code, String left, String right) {
   }
   return [false, '($code) find error', expectFrom, expectTo + 1];
 }
+
+
+
+// 去除<无用>的最外层括号(自动迭代)，例如：
+//print(killUselessParentheses(' (code)'));   :code
+//print(killUselessParentheses(' (((code)))'));   :code
+//print(killUselessParentheses(' d(((code)))'));   : d(((code)))
+String killUselessParentheses(String code){
+  String firstNotBlankSign =  findFirstNotBlankSign(code);
+  if (firstNotBlankSign == '('){
+    String kill = killParentheses(code);
+    return killUselessParentheses(kill);
+  }
+  return code;
+}
+
+
+// 不管括号在哪直接去除(只去除一次)
+// 这会误伤：f()
+String killParentheses(String code) {
+  code = code.trim();
+  int mm = 0;
+  int expectFrom = 0;
+  int expectTo = 0;
+  for (int i = 0; i < code.length; i++) {
+    String char = code[i];
+    if (char == '(') {
+      if (mm == 0) {
+        expectFrom = i;
+      }
+      mm += 1;
+    } else if (char == ')') {
+      mm += (-1);
+      if (mm == 0) {
+        expectTo = i;
+        return code.substring(expectFrom + 1, expectTo);
+      }
+    }
+  }
+  return '($code) killParentheses error';
+}
+

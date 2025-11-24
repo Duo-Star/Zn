@@ -18,6 +18,10 @@ class DivTask {
   // 返回是否要切割
   bool run() {
     //
+    if (code.isEmpty){
+      return false;
+    }
+    //
     String firstNotBlankSign = findFirstNotBlankSign(code);
     String firstSign = code.substring(0, 1);
     //
@@ -86,6 +90,7 @@ class DivTask {
 List<String> divBush(String code) {
   // 移除注释
   code = removeComments(code);
+  code = "$code  ";//加上这个
   // 任务列表
   List<DivTask> taskList = [];
   // 代码片段

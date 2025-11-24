@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'Zn/Bush/div_bush.dart' as div_bush;
 import 'Zn/Bush/unfold.dart' as unfold;
+import 'Zn/Bush/debug.dart' as bush_debug;
+import 'Zn/Bush/lib.dart' as lib;
+import 'Zn/DebugTools/format_out.dart' as format_out;
+
 void main() {
   runApp(const MyApp());
   // div_bush.test();
-  unfold.checkIfFunction('a={{}}');
+
+  String code = bush_debug.debugTests[2];
+  //code = '''z {{m n} b} c''';
+  code = '''
+a=<>:fill(20, (i){rand()*100})
+isPrime=(i){ << r f=(k){k+=2 {r=0}??(i?%k)} (f)loop(i-2) r=1 }
+F = (x){ ({1}??(x <= 1):{x * F(x-1)})() }
+F(x) = ({1}??(x <= 1):{x * F(x-1)})()
+F(x)=1?(x<=1):x*F(x-1)
+Factorial = (x){ << r {r = 1}??(x <= 1) r = x * f(x-1) }
+1 1?1 {1}() {<<1}() (x){x}(1) {1}??(1)() {<<r r=1}() (i){i}loop(1) (x){<<r r=x}(1)
+
+
+
+''';
+  List<Map> map = unfold.forest(code);
+
+  print(format_out.formatDynamicAsTree(map));
 }
 
 class MyApp extends StatelessWidget {

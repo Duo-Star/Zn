@@ -1,6 +1,4 @@
-# Zn 锌
-
-Zn 编程语言
+# Zn 锌 编程语言
 
 [pic]: Zn-doc/pic.png
 

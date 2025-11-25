@@ -8,21 +8,21 @@
 
 设计作为高阶计算器解析器，可以运行单行表达式
 
-[你好世界](b-hello)
+[你好世界](b-hello.md)
 
-[整体风格](c-style)
+[整体风格](c-style.md)
 
-[结构](d-structure)
+[结构](d-structure.md)
 
-[量](e-literal)
+[量](e-literal.md)
 
-[函数](f-function)
+[函数](f-function.md)
 
-[类型系统](g-type)
+[类型系统](g-type.md)
 
-[流程控制](h-process)
+[流程控制](h-process.md)
 
-[简单例子](i-demo)
+[简单例子](i-demo.md)
 
 ---
 by : **Duo - 113530014**

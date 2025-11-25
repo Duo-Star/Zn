@@ -1,0 +1,191 @@
+{
+  "main": {
+    "id": "e8c6bdce72642f28",
+    "type": "split",
+    "children": [
+      {
+        "id": "7f06aa96afd4fb6d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "654fc8fd4748923d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "a.Zn-从入门到哇塞.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "a.Zn-从入门到哇塞"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dd460c73f0cbaf54",
+    "type": "split",
+    "children": [
+      {
+        "id": "4223422c51a1c538",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5adde186aa3f2d62",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "00b1da3eb098a062",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "6d421ef1e5b25456",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ada8571fed9ef971",
+    "type": "split",
+    "children": [
+      {
+        "id": "99199743f0dacaae",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eca4f0cabc4317ba",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "a.Zn-从入门到哇塞.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "a.Zn-从入门到哇塞 的反向链接列表"
+            }
+          },
+          {
+            "id": "77dfeddb2fe1c027",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "a.Zn-从入门到哇塞.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "a.Zn-从入门到哇塞 的出链列表"
+            }
+          },
+          {
+            "id": "500685e2532dd614",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "ad79a6846920eb0d",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "b6e754bd969c9bc3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "a.Zn-从入门到哇塞.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "a.Zn-从入门到哇塞 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:创建新数据库": false
+    }
+  },
+  "active": "654fc8fd4748923d",
+  "lastOpenFiles": [
+    "pic.png",
+    "a.Zn-从入门到哇塞.md"
+  ]
+}

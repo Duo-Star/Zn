@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "a.Zn-从入门到哇塞.md",
+                "file": "a-start.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "a.Zn-从入门到哇塞"
+              "title": "a-start"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "a.Zn-从入门到哇塞.md",
+                "file": "a-start.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "a.Zn-从入门到哇塞 的反向链接列表"
+              "title": "a-start 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "a.Zn-从入门到哇塞.md",
+                "file": "a-start.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "a.Zn-从入门到哇塞 的出链列表"
+              "title": "a-start 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "a.Zn-从入门到哇塞.md",
+                "file": "a-start.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "a.Zn-从入门到哇塞 的大纲"
+              "title": "a-start 的大纲"
             }
           }
         ]
@@ -186,6 +186,15 @@
   "active": "654fc8fd4748923d",
   "lastOpenFiles": [
     "pic.png",
-    "a.Zn-从入门到哇塞.md"
+    "i-demo.md",
+    "h-process.md",
+    "g-type.md",
+    "f-function.md",
+    "e-literal.md",
+    "d-structure.md",
+    "c-style.md",
+    "b-hello.md",
+    "a.Zn-从入门到哇塞.md",
+    "a-start.md"
   ]
 }

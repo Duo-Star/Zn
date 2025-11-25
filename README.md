@@ -6,7 +6,7 @@
 
 ## 学习
 
-- [Zn-启航](Zn-doc/a.Zn-从入门到哇塞.md)
+- [Zn-启航](Zn-doc/a-start.md)
 
 ---
 开发中

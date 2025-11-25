@@ -1,13 +1,44 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'Zn/Bush/div_bush.dart' as div_bush;
 import 'Zn/Bush/unfold.dart' as unfold;
 import 'Zn/Bush/debug.dart' as bush_debug;
 import 'Zn/Bush/lib.dart' as lib;
 import 'Zn/DebugTools/format_out.dart' as format_out;
+import 'Zn/Bush/Classify/compound.dart';
+import 'Zn/Bush/Classify/assignment.dart';
+import 'Zn/Bush/Classify/function.dart';
 
 void main() {
   runApp(const MyApp());
   // div_bush.test();
+
+  void pf(dynamic sth){
+    if (sth is Map || sth is List){
+      print(format_out.formatDynamicAsTree(sth));
+    }else{
+      print(sth);
+    }
+  }
+
+  //print(lib.killUselessParentheses(' (code)11'));
+
+  List<String> d = [
+    '1','{}',
+    'a=1','a=<>','a=[]','a=""',
+    'a()=0','a={}','a=(){}'
+  ];
+
+  d.forEach((String s){
+    pf(checkAssignment(s));
+  });
+
+  // testCheckFunction();
+
+  // pf(checkCompound('< 1 2 3 >'));
+
+
 
   String code = bush_debug.debugTests[2];
   //code = '''z {{m n} b} c''';
@@ -18,13 +49,46 @@ F = (x){ ({1}??(x <= 1):{x * F(x-1)})() }
 F(x) = ({1}??(x <= 1):{x * F(x-1)})()
 F(x)=1?(x<=1):x*F(x-1)
 Factorial = (x){ << r {r = 1}??(x <= 1) r = x * f(x-1) }
-1 1?1 {1}() {<<1}() (x){x}(1) {1}??(1)() {<<r r=1}() (i){i}loop(1) (x){<<r r=x}(1)
+1 1?1 {<< 1}() {1}() (x){x}(1) {1}??(1)() {<<r r=1}() (i){i}loop(1) (x){<<r r=x}(1)
+(a bb ccc){dd ee ff}(1 2 33)
+''';
 
+  code = '''
+a=(){x y z {1 2 {{}}}}
 
 ''';
+
   List<Map> map = unfold.forest(code);
 
-  print(format_out.formatDynamicAsTree(map));
+  // pf(map);
+
+  List<String> s = div_bush.divBush('''
+a 1 "" <> [] {} () abc 1.23
+(1) ("") (<>) ({}) ([]) ((1))
+a=1 a="" a=<> a=[]
+a=(){} a()=0 a={}
+f() {}() (){}()
+{}f{} {}f() {}f<> {}f"" {}f[]
+()f{} ()f() ()f<> ()f"" ()f[]
+<>f{} <>f() <>f<> <>f"" <>f[]
+""f{} ""f() ""f<> ""f"" ""f[]
+[]f{} []f() []f<> []f"" []f[]
+1 + 1 - 3 * 4 / 5 ^ 6 ?= 5 % 2 != 5 //?< 8 ?> 7 <= 4 >= 3 
+(-1)
+()?() {}?() ""?() <>?() []?()
+{}??():{}
+<>.a  <>[1]  <>:a
+<>.a()
+a.a a[1] a:a
+a.a=1 a[1]=1
+a=[ b=[<>, { x +45 6 -3  f() {}f"" }, <1-f(), "">] ]
+x +456 -3
+x +4 5 6 -3
+(+123)
+''');
+
+  // pf(s);
+
 }
 
 class MyApp extends StatelessWidget {
@@ -79,6 +143,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  List<Widget> w = [
+    Text('000000'),
+    MaterialButton(onPressed: (){}),
+  ];
+
+   int i = 0;
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -98,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -132,6 +204,8 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            w[i],
+
           ],
         ),
       ),

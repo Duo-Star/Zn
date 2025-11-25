@@ -194,9 +194,10 @@ List<dynamic> findPair(String code, String left, String right) {
 //print(killUselessParentheses(' (code)'));   :code
 //print(killUselessParentheses(' (((code)))'));   :code
 //print(killUselessParentheses(' d(((code)))'));   : d(((code)))
+//print(killUselessParentheses(' d(((code)))s'));   : d(((code)))s
 String killUselessParentheses(String code){
   String firstNotBlankSign =  findFirstNotBlankSign(code);
-  if (firstNotBlankSign == '('){
+  if (firstNotBlankSign == '(' && code.substring(code.length-1)==')'){
     String kill = killParentheses(code);
     return killUselessParentheses(kill);
   }

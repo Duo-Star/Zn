@@ -1,1 +1,5 @@
-{}
+{
+  "cssTheme": "Monokai",
+  "baseFontSizeAction": true,
+  "baseFontSize": 21
+}

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "a-start.md",
+                "file": "d-structure.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "a-start"
+              "title": "d-structure"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "a-start.md",
+                "file": "g-type.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "a-start 的反向链接列表"
+              "title": "g-type 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "a-start.md",
+                "file": "g-type.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "a-start 的出链列表"
+              "title": "g-type 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "a-start.md",
+                "file": "g-type.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "a-start 的大纲"
+              "title": "g-type 的大纲"
             }
           }
         ]
@@ -185,16 +185,17 @@
   },
   "active": "654fc8fd4748923d",
   "lastOpenFiles": [
-    "pic.png",
-    "i-demo.md",
-    "h-process.md",
-    "g-type.md",
+    "c-style.md",
     "f-function.md",
     "e-literal.md",
     "d-structure.md",
-    "c-style.md",
+    "h-process.md",
+    "g-type.md",
+    "a-start.md",
+    "i-demo.md",
     "b-hello.md",
-    "a.Zn-从入门到哇塞.md",
-    "a-start.md"
+    "pic.png",
+    "a-start.md~",
+    "a.Zn-从入门到哇塞.md"
   ]
 }

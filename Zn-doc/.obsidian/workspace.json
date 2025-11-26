@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "d-structure.md",
+                "file": "i-demo.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "d-structure"
+              "title": "i-demo"
             }
           }
         ]
@@ -185,10 +185,10 @@
   },
   "active": "654fc8fd4748923d",
   "lastOpenFiles": [
+    "d-structure.md",
     "c-style.md",
     "f-function.md",
     "e-literal.md",
-    "d-structure.md",
     "h-process.md",
     "g-type.md",
     "a-start.md",

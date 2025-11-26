@@ -1,5 +1,6 @@
 {
   "cssTheme": "Monokai",
   "baseFontSizeAction": true,
-  "baseFontSize": 21
+  "baseFontSize": 21,
+  "theme": "obsidian"
 }

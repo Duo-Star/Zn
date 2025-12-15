@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'Zn/DebugTools/format_out.dart' as format_out;
+import 'sys_fun.dart';
 
+//
 void pf(dynamic sth) {
   if (sth is Map || sth is List) {
     print(format_out.formatDynamicAsTree(sth));
@@ -10,117 +12,84 @@ void pf(dynamic sth) {
   }
 }
 
-class Address {
-  List<int> address = [];
-  Address(this.address);
-  @override
-  String toString() {
-    return "@$address";
-  }
+
+enum Type {
+  nil,
+  num,
+  fun,
+  rt,
+  //
+  change,
+  changeV,
+  //
+  sysFunCall,
+  sysFunCallV,
+  call,
+  //
+  get,
+  address,
+  x,
+
 }
 
-Map<String, Data Function(Data data, Data it)> sysFunPool = {
-  'print': (Data data, Data it) {
-    Data d = data.get(it.value[1][0]);
-    pf('--> out: ${it.value[1][0]}:$d');
-    return d;
-  },
-  'sin': (Data data, Data it) {
-    Data d = data.get(it.value[1][0]);
-    pf("sin $d.value");
-    // pf('--> out: ${it.value[1][0]}:$d');
-    return d;
-  },
-  'add': (Data data, Data it) {
-    List<Address> addNumsAddress = it.value[1];
-    List<num> addNums = [];
-    for (Address address in addNumsAddress) {
-      addNums.add(data.get(address).value);
-    }
-    var r = numb(addNums.reduce((value, element) => value + element));
-    pf('debug: add$addNumsAddress : $addNums = $r');
-    return r;
-  },
-  '<': (Data data, Data it) {
-    List<num> dn = [
-      data.get(it.value[1][0]).value,
-      data.get(it.value[1][1]).value,
-    ];
-    return (dn[0] < dn[1]) ? numb(1) : numb(0);
-  },
-  'if': (Data data, Data it) {
-    num boo = data.get(it.value[1][0]).value;
-    Data f = data.getL(it.value[1][1]);
-    Data result = nil();
-    if (boo == 1) {
-      pf('debug: runIF: $f');
-      result = f.run(env: data);
-    } else {
-      pf('debug: notRunIF: $f');
-    }
-    return result;
-  },
-};
-
-enum Type { nil, num, fun, change, changeV, sysFunCall, call, get }
-
+//
 class Data {
-  List<Data> list = []; // 保留原指令
-  List<Data> valueList = []; // 会替换成值
-  dynamic value;
-  Type type = Type.nil;
+  List<Data> instructionList = []; // 保留原指令
+  List<Data> runtimeValue = []; // 会替换成值
+  dynamic value; // 存储 Dart值
+  Type type = Type.nil; // 标注类型
   //
 
   // 地址索引
-  Data get(Address ad, {Data? env}) {
+  Data get(Data ad, {Data? env}) {
     env = env ?? this;
-    List<Data> c = env.valueList;
+    List<Data> c = env.runtimeValue;
     Data d = Data();
-    for (int i in ad.address) {
+    for (int i in ad.value[0]) {
       d = c[i - 1];
-      c = d.valueList;
+      c = d.runtimeValue;
     }
     return d;
   }
 
   //
-  Data getL(Address ad, {Data? env}) {
+  Data getL(Data ad, {Data? env}) {
     env = env ?? this;
-    List<Data> c = env.list;
+    List<Data> c = env.instructionList;
     Data d = Data();
-    for (int i in ad.address) {
+    for (int i in ad.value[0]) {
       d = c[i - 1];
-      c = d.list;
+      c = d.instructionList;
     }
     return d;
   }
 
   //
   // 替换
-  void changeV(Address ad, Data newData, {Data? env}) {
+  void changeV(Data ad, Data newData, {Data? env}) {
     env = env ?? this;
     // 如果地址为空，替换当前对象
-    if (ad.address.isEmpty) {
-      env.list = newData.list;
-      env.valueList = newData.valueList;
+    if (ad.value[0].isEmpty) {
+      env.instructionList = newData.instructionList;
+      env.runtimeValue = newData.runtimeValue;
       env.value = newData.value;
       env.type = newData.type;
       return;
     }
-    List<Data> c = env.valueList;
+    List<Data> c = env.runtimeValue;
     // 遍历到倒数第二个索引（找到父节点）
-    for (int i = 0; i < ad.address.length - 1; i++) {
-      int index = ad.address[i] - 1;
+    for (int i = 0; i < ad.value[0].length - 1; i++) {
+      int index = ad.value[0][i] - 1;
       // 边界检查
       if (index < 0 || index >= c.length) {
-        throw Exception('Index ${ad.address}[i] out of bounds at position $i');
+        throw Exception('Index ${ad.value[0]}[i] out of bounds at position $i');
       }
-      c = c[index].valueList;
+      c = c[index].runtimeValue;
     }
     // 替换最后一个索引位置的 Data
-    int lastIndex = ad.address.last - 1;
+    int lastIndex = ad.value[0].last - 1;
     if (lastIndex < 0 || lastIndex >= c.length) {
-      throw Exception('Index ${ad.address.last} out of bounds');
+      throw Exception('Index ${ad.value[0].last} out of bounds');
     }
     c[lastIndex] = newData;
   }
@@ -129,8 +98,8 @@ class Data {
   //
   Data run({Data? env}) {
     env = env ?? this;
-    for (int i = 0; i < list.length; i++) {
-      Data it = list[i];
+    for (int i = 0; i < instructionList.length; i++) {
+      Data it = instructionList[i];
       if (it.type == Type.change) {
         //
         changeV(it.value[0], get(it.value[1], env: env), env: env);
@@ -138,16 +107,21 @@ class Data {
         //
         changeV(it.value[0], it.value[1], env: env);
       } else if (it.type == Type.call) {
-        //pf(get(it.value[0], env:env ));
-        valueList[i] = getL(it.value[0], env: env).run(env: env);
+        pf('aaa${it.value[0]}** ${get(it.value[0], env:env )}');
+        runtimeValue[i] = getL(it.value[0], env: env).run(env: env);
       } else if (it.type == Type.sysFunCall) {
-        //pf(it);
+        pf(it);
         Data result = sysFunPool[it.value[0]]!(env, it);
-        valueList[i] = result;
-      } else if (it.type == Type.get) {}
+        runtimeValue[i] = result;
+      } else if (it.type == Type.sysFunCallV) {
+        pf(it.value);
+        sysFunPoolV[it.value[0]]!(env, it);
+      } else if (it.type == Type.rt) {
+
+        break;
+      }
     }
-    Data result = valueList.last;
-    // pf("333$back");
+    Data result = runtimeValue.last;
     return result;
   }
 
@@ -155,95 +129,19 @@ class Data {
   @override
   String toString() {
     if (type == Type.num) {
-      return '[$type:$value]';
+      return '[num:$value]';
     } else if (type == Type.change) {
-      return '[$type:${value[0]} -> ${value[1]}]';
+      return '[change:${value[0]} -> ${value[1]}]';
     } else if (type == Type.sysFunCall) {
       return '[$type:${value[0]}(${value[1]})]';
+    }  else if (type == Type.address) {
+      return '[$type:${value[0]}(${value[1]})]';
     } else {
-      return '[$type: - program:$list - data:$valueList]';
+      return '[$type: - program:$instructionList - data:$runtimeValue]';
     }
   }
 }
 
-// ---------------------------------------------------------
-// nil
-Data nil() {
-  return Data()..type = Type.nil;
-}
-
-// 函数
-Data fun(List<Data> list) {
-  return Data()
-    ..type = Type.fun
-    ..list = list
-    ..valueList = List<Data>.from(list);
-}
-
-// 数字
-Data numb(num n) {
-  return Data()
-    ..type = Type.num
-    ..value = n;
-}
-
-// 地址，新值
-Data cngV(Address address, Data data) {
-  return Data()
-    ..type = Type.changeV
-    ..value = [address, data];
-}
-
-// 地址，新值地址
-Data cng(Address address, Address newAddress) {
-  return Data()
-    ..type = Type.change
-    ..value = [address, newAddress];
-}
-
-// 系统函数
-Data sysFunCall(String name, List<Address> par) {
-  return Data()
-    ..type = Type.sysFunCall
-    ..value = [name, par];
-}
-
-// 调取函数 「函数地址，参数地址」
-Data call(Address address, List<Address> par) {
-  return Data()
-    ..type = Type.call
-    ..value = [address, par];
-}
-
-//
-Data prt(Address address) {
-  return sysFunCall('print', [address]);
-}
-
-//
-Data callIf(Address cod, Address f) {
-  return sysFunCall('if', [cod, f]);
-}
-
-//
-Data lessThan(Address a, Address b) {
-  return sysFunCall('<', [a, b]);
-}
-
-//
-Data add(Address a, Address b) {
-  return sysFunCall('add', [a, b]);
-}
-
-//
-Data x() {
-  return sysFunCall('x', []);
-}
-
-//
-Address a(List<int> address) {
-  return Address(address);
-}
 
 //
 void main() {
@@ -253,39 +151,37 @@ void main() {
     numb(1),
     numb(5),
     fun([
-      add(a([1]), a([2])),
+      mAdd(a([1]), a([2])),
       cng(a([1]), a([4, 1])),
-      lessThan(a([1]), a([3])),
+      mLess(a([1]), a([3])),
       prt(a([1])),
       callIf(a([4, 3]), a([4])),
     ]),
     call(a([4]), []),
-    sysFunCall('sin', [a([1])]),
-    prt(a([5])),
+    mSin(a([1])),
+    prt(a([6])),
+    numb(114514),
+    fun([
+      prt(a([8])),
+    ]),
+    numb(3),
+    loop(a([9]), a([10])),
+    prtV(numb(222)),
   ]);
 
-  //pf(p);
-  p.run();
-  //pf(p);
-
-  /*
-  zn------------
-  x = 1
-  f = (x){ x->2 }
-  f(x)
-  zn-p----------
-  1 { _ [2 1]->2 } [2]([1])
-   */
-  Data p2 = fun([
-    numb(1),
+//
+  p = fun([
     fun([
       x(),
-      cngV(a([2, 1]), numb(2)),
+      numb(1, label: 'a'),
+      prt(a([1,1])),
+      rt(a([1]), a([1,1])),
     ]),
-    call(a([2]), [a([1])])
+    call(a([1]), []),
   ]);
 
-
-
-
+  //pf(p);
+  Data result = p.run();
+  pf('finish: program finish with $result');
+  //pf(p);
 }

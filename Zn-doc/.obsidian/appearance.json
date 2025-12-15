@@ -1,5 +1,6 @@
 {
-  "cssTheme": "Monokai",
+  "cssTheme": "GitHub Theme",
   "baseFontSizeAction": true,
-  "baseFontSize": 21
+  "baseFontSize": 30,
+  "theme": "moonstone"
 }

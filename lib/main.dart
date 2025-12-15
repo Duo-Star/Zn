@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:zn/Zn/Bush/Classify/call.dart';
 import 'Zn/Bush/div_bush.dart' as div_bush;
 import 'Zn/Bush/unfold.dart' as unfold;
 import 'Zn/Bush/debug.dart' as bush_debug;
@@ -10,14 +11,22 @@ import 'Zn/Bush/Classify/compound.dart';
 import 'Zn/Bush/Classify/assignment.dart';
 import 'Zn/Bush/Classify/function.dart';
 
+//
+import 'runtime/main.dart' as runtime;
+
+//
 void main() {
   runApp(const MyApp());
+
+  ///
+  runtime.main();
+
   // div_bush.test();
 
-  void pf(dynamic sth){
-    if (sth is Map || sth is List){
+  void pf(dynamic sth) {
+    if (sth is Map || sth is List) {
       print(format_out.formatDynamicAsTree(sth));
-    }else{
+    } else {
       print(sth);
     }
   }
@@ -25,20 +34,24 @@ void main() {
   //print(lib.killUselessParentheses(' (code)11'));
 
   List<String> d = [
-    '1','{}',
-    'a=1','a=<>','a=[]','a=""',
-    'a()=0','a={}','a=(){}'
+    '1',
+    '{}',
+    'a=1',
+    'a=<>',
+    'a=[]',
+    'a=""',
+    'a()=0',
+    'a={}',
+    'a=(){}',
   ];
 
-  d.forEach((String s){
-    pf(checkAssignment(s));
+  d.forEach((String s) {
+    // pf(checkAssignment(s));
   });
 
   // testCheckFunction();
 
   // pf(checkCompound('< 1 2 3 >'));
-
-
 
   String code = bush_debug.debugTests[2];
   //code = '''z {{m n} b} c''';
@@ -53,10 +66,7 @@ Factorial = (x){ << r {r = 1}??(x <= 1) r = x * f(x-1) }
 (a bb ccc){dd ee ff}(1 2 33)
 ''';
 
-  code = '''
-a=(){x y z {1 2 {{}}}}
-
-''';
+  // code = '''a=(){x y z {1 2 {{}}}}''';
 
   List<Map> map = unfold.forest(code);
 
@@ -88,7 +98,6 @@ x +4 5 6 -3
 ''');
 
   // pf(s);
-
 }
 
 class MyApp extends StatelessWidget {
@@ -143,12 +152,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  List<Widget> w = [
-    Text('000000'),
-    MaterialButton(onPressed: (){}),
-  ];
+  List<Widget> w = [Text('000000'), MaterialButton(onPressed: () {})];
 
-   int i = 0;
+  int i = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -205,7 +211,6 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             w[i],
-
           ],
         ),
       ),
